@@ -232,8 +232,20 @@ void makeArray(void){
 			u[i] = 0;
 		}
 	}else if(gSpec.proMode!=3&&gSpec.proMode!=4){
-		for(i=0; i<NUM_STA*2; i++){
-			u[i] = -100/(2*NUM_STA);
+		if(gSpec.lower==0){
+			for(i=0; i<NUM_STA; i++){
+				u[i] = (double)-100/(2*NUM_STA);
+			}
+			for(; i<NUM_STA*2; i++){
+				u[i] = (double)-100/(NUM_STA*2);
+			}
+		}else if(gSpec.lower==1){
+			for(i=0; i<NUM_STA; i++){
+				u[i] = (double)-100/((NUM_STA+1)*NUM_STA);
+			}
+			for(; i<NUM_STA*2; i++){
+				u[i] = (double)-100/(NUM_STA+1);
+			}
 		}
 	}else{
 		for(i=0; i<NUM_STA*2; i++){

@@ -81,6 +81,8 @@ typedef struct specification{
 	int seed;
 	int rateMode;
 	double bandWidth;
+	double loss;
+	int lower;
 }simSpec;
 
 void simSetting(int, char**);

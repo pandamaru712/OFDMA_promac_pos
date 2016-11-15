@@ -31,6 +31,9 @@ static struct option options[] = {
 	{"seed", required_argument, NULL, 'c'},
 	{"config", no_argument, NULL, 'i'},
 	{"phyRate", required_argument, NULL, 'y'},
+	{"ICIth", required_argument, NULL, 'j'},
+	{"loss", required_argument, NULL, 'k'},
+	{"lower", required_argument, NULL, 'q'},
 	{0, 0, 0, 0}
 };
 
@@ -63,9 +66,12 @@ void simSetting(int argc, char **argv){
 	gSpec.giveU = 0.5;
 	gSpec.delaySTA = 5;
 	gSpec.rateMode = 0;
+	gSpec.ICIth = 5;
+	gSpec.loss = 40;
+	gSpec.lower = 0;
 	memset(gSpec.filename, '\0', strlen(gSpec.filename));
 
-	while((opt = getopt_long(argc, argv, "hdfos:n:t:l:r:m:a:u:b:p:x:w:g:e:c:iy:", options, &index)) != -1){
+	while((opt = getopt_long(argc, argv, "hdfos:n:t:l:r:m:a:u:b:p:x:w:g:e:c:iy:j:k:q:", options, &index)) != -1){
 		switch(opt){
 			case 'h':
 				printf(
@@ -103,6 +109,9 @@ void simSetting(int argc, char **argv){
 					"   -y, --phyRate: Phy rate mode.\n"
 					"      0: Shannon capacity.\n"
 					"      1: {6, 9, 12, 18, 24, 36, 48, 54}\n"
+					"   -j, --ICI threshold on UFD.\n"
+					"   -k, --loss: Loss (47 on 5 GHz or 40 on 2.4 GHz).\n"
+					"   -q, --lower: u[i].\n"
 				);
 				exit(1);
 				break;
@@ -175,6 +184,15 @@ void simSetting(int argc, char **argv){
 			case 'y':
 				gSpec.rateMode = atoi(optarg);
 				break;
+			case 'j':
+				gSpec.ICIth = atof(optarg);
+				break;
+			case 'k':
+				gSpec.loss = atof(optarg);
+				break;
+			case 'q':
+				gSpec.lower = atoi(optarg);
+				break;
 			default:
 				printf("Illegal options! \'%c\' \'%c\'\n", opt, optopt);
 				exit(1);
@@ -235,6 +253,16 @@ void simSetting(int argc, char **argv){
 		exit(1);
 	}
 	printf("   delayPower is %f.\n", gSpec.delayPower);
+	printf("   ICI threshold is %f.\n", gSpec.ICIth);
+	printf("   Propagation loss is %f dB.\n", gSpec.loss);
+	if(gSpec.lower==0){
+		printf("   u[i] = -100/(NUM_STA*2).\n");
+	}else if(gSpec.lower==1){
+		printf("   u[i] = -100/(NUM_STA+1).\n");
+	}else{
+		printf("   Option \"lower\" is wrong.\n");
+		exit(630);
+	}
 	printf("------------------\n");
 
 	if(gSpec.fOutput==true){
@@ -300,6 +328,13 @@ void simSetting(int argc, char **argv){
 			exit(1);
 		}
 		fprintf(gSpec.output, "   delayPower is %f.\n", gSpec.delayPower);
+		fprintf(gSpec.output, "   ICI threshold is %f.\n", gSpec.ICIth);
+		fprintf(gSpec.output, "   Propagation loss is %f dB.\n", gSpec.loss);
+		if(gSpec.lower==0){
+			fprintf(gSpec.output, "   u[i] = -100/(NUM_STA*2).\n");
+		}else if(gSpec.lower==1){
+			fprintf(gSpec.output, "   u[i] = -100/(NUM_STA+1).\n");
+		}
 		fprintf(gSpec.output, "------------------\n");
 	}
 
@@ -338,7 +373,6 @@ void simSetting(int argc, char **argv){
 	gSpec.bufferSizeByte = 200;
 	gSpec.lambdaAp = 0.1;
 	gSpec.SIC = 110;   //Self-interference cancelation [dB]
-	gSpec.ICIth = 5;
 	gSpec.noise = -91.63;
 	gSpec.bandWidth = 16.5625;
 }
@@ -505,6 +539,36 @@ void loadConfig(){
          }
 			temp[j] = '\0';
 			gSpec.rateMode = atoi(temp);
+      }
+		if (!strncmp(str, "ICIth", strlen("ICIth"))) {
+         while (str[i++] != ' ') {
+            ;
+         }
+         while (str[i] != '\n') {
+            temp[j++] = str[i++];
+         }
+			temp[j] = '\0';
+			gSpec.ICIth = atof(temp);
+      }
+		if (!strncmp(str, "loss", strlen("loss"))) {
+         while (str[i++] != ' ') {
+            ;
+         }
+         while (str[i] != '\n') {
+            temp[j++] = str[i++];
+         }
+			temp[j] = '\0';
+			gSpec.loss = atof(temp);
+      }
+		if (!strncmp(str, "lower", strlen("lower"))) {
+         while (str[i++] != ' ') {
+            ;
+         }
+         while (str[i] != '\n') {
+            temp[j++] = str[i++];
+         }
+			temp[j] = '\0';
+			gSpec.lower = atoi(temp);
       }
 	}
    fclose(fin);

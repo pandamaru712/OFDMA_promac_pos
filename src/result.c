@@ -100,7 +100,9 @@ void simulationResult(staInfo sta[], apInfo *ap, resultInfo *result, int trialID
 	result->thrJFI += pow((double)rByteFrameSucc * 8 / gElapsedTime, 2) / (NUM_STA * thr);
 	result->dlyJFI += pow(rDelay, 2) / (NUM_STA * dly);
 
+	printf("AP: %f\n", (double)ap->numTxFrame / gSpec.chance);
 	for(i=0; i<NUM_STA; i++){
+		printf("sta %d: %f\n", i, (double)sta[i].numTxFrame / gSpec.chance);
 		//printf("%ld\n", sta[i].numSuccFrame);
 		//result->proUp[i] += (double)sta[i].numSuccFrame / rNumFrameSucc;
 		//printf("%ld\n", sta[i].numTxFrame);
