@@ -426,7 +426,7 @@ void calculateRSSI(apInfo *ap, staInfo sta[], double delay[]){
 					}
 					rssi_j = txPower + sta[j-1].antennaGain + ap->antennaGain - 30*log10(distance[0][j]) - gSpec.loss;
 					sinr_j = mw2dbm(dbm2mw(rssi_j)/(dbm2mw(gSpec.noise)+dbm2mw(ap->txPower-gSpec.SIC)));
-					if(sinr<9.63){
+					if(sinr_j<9.63){
 						uplink = 0;
 					}else if(gSpec.proMode==0||gSpec.proMode==2||gSpec.proMode==3||gSpec.proMode==5||gSpec.proMode==6){
 						uplink = shannon(dbm2mw(rssi_j)/(dbm2mw(gSpec.noise)+dbm2mw(ap->txPower-gSpec.SIC))) / NUM_MULTIPLEX;
@@ -442,7 +442,7 @@ void calculateRSSI(apInfo *ap, staInfo sta[], double delay[]){
 					}
 					rssi_k = txPower + sta[k-1].antennaGain + ap->antennaGain - 30*log10(distance[0][k]) - gSpec.loss;
 					sinr_k = mw2dbm(dbm2mw(rssi_k)/(dbm2mw(gSpec.noise)+dbm2mw(ap->txPower-gSpec.SIC)));
-					if(sinr<9.63){
+					if(sinr_k<9.63){
 						uplink += 0;
 					}else if(gSpec.proMode==0||gSpec.proMode==2||gSpec.proMode==3||gSpec.proMode==5||gSpec.proMode==6){
 						uplink += shannon(dbm2mw(rssi_k)/(dbm2mw(gSpec.noise)+dbm2mw(ap->txPower-gSpec.SIC))) / NUM_MULTIPLEX;

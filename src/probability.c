@@ -652,7 +652,7 @@ int selectNode(apInfo *ap, staInfo sta[], bool *fUpCollOne, bool *fUpCollSecond,
 	selectionPrintf("Select STA j\n");
 	for(j=0; j<NUM_STA+1; j++){
 		for(k=0; k<gNumComb; k++){
-			if(gComb[k].i==*downNode&&(gComb[k].j==j||gComb[k].k==j)){
+			if(gComb[k].i==*downNode&&gComb[k].j==j){
 				tempUp[j] += pro[k];
 			}
 		}
@@ -726,16 +726,22 @@ int selectNode(apInfo *ap, staInfo sta[], bool *fUpCollOne, bool *fUpCollSecond,
 	selectionPrintf("Select STA k\n");
 	for(k=0; k<NUM_STA+1; k++){
 		for(j=0; j<gNumComb; j++){
-			if(gComb[j].i==*downNode&&(gComb[j].j==k||gComb[j].k==k)){
+			if((gComb[j].i==*downNode&&gComb[j].j==*upNodeOne)&&gComb[j].k==k){
 				tempUp[k] += pro[j];
 			}
+		}
+	}
+	double tempSecond = 0;
+	for(i=0; i<gNumComb; i++){
+		if(gComb[i].i==*downNode&&gComb[i].j==*upNodeOne){
+			tempSecond += pro[i];
 		}
 	}
 	for(k=0; k<NUM_STA+1; k++){
 		if(*downNode==k){
 			proUp[k] = 0;
 		}else{
-			proUp[k] = tempUp[k]/proDown[*downNode];
+			proUp[k] = tempUp[k]/tempSecond;
 			//if(proUp[j]<0.000001){
 				selectionPrintf("%f, %f ", tempUp[k], proDown[*downNode]);
 			//}*/
