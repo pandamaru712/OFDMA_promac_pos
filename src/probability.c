@@ -846,9 +846,9 @@ int selectNode(apInfo *ap, staInfo sta[], bool *fUpCollOne, bool *fUpCollSecond,
 	}
 	selectionPrintf("(%d, %d, %d),", *downNode, *upNodeOne, *upNodeSecond);
 
-	if(numUpOne==1&&numUpSecond==1){
+	/*if(numUpOne==1&&numUpSecond==1){
 		ratePrintf("\n(%d, %d, %d),\n", *downNode, *upNodeOne, *upNodeSecond);
-	}
+	}*/
 
 	if(*downNode!=0&&*upNodeOne==0&&*upNodeSecond==0){
 		gNumHalfDuplex++;

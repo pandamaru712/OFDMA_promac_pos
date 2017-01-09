@@ -188,20 +188,21 @@ void transmission(staInfo sta[], apInfo *ap){
 		}
 	}else if(fUpCollOne==true&&fUpCollSecond==false){
 		if(fNoDownlink==false){
-			ap->sumFrameLengthInBuffer -= ap->buffer[0].lengthMsdu;
-			ap->byteSuccFrame += ap->buffer[0].lengthMsdu;
+			//ap->sumFrameLengthInBuffer -= ap->buffer[0].lengthMsdu;
+			//ap->byteSuccFrame += ap->buffer[0].lengthMsdu;
 			//txFrameLength = ap->buffer[0].lengthMsdu;
 			apLength = timeFrameLength(ap->buffer[0].lengthMsdu, ap->dataRate);
 			/*if(txFrameLength<ap->buffer[0].lengthMsdu){
 				txFrameLength = ap->buffer[0].lengthMsdu;
 			}*/
-			ap->buffer[0].lengthMsdu = 0;
-			ap->sumDelay += (gElapsedTime - ap->buffer[0].timeStamp);
-			ap->buffer[0].timeStamp = 0;
-			ap->numSuccFrame++;
+			//ap->buffer[0].lengthMsdu = 0;
+			//ap->sumDelay += (gElapsedTime - ap->buffer[0].timeStamp);
+			//ap->buffer[0].timeStamp = 0;
+			//ap->numSuccFrame++;
+			ap->numCollFrame++;
 			ap->numTxFrame++;
 			//ap->numPrimFrame++;
-			swapAp(ap);
+			//swapAp(ap);
 		}
 		for(i=0; i<gSpec.numSta; i++){
 			if(sta[i].fTxSecond==true){
@@ -255,20 +256,21 @@ void transmission(staInfo sta[], apInfo *ap){
 		}
 	}else if(fUpCollOne==false&&fUpCollSecond==true){
 		if(fNoDownlink==false){
-			ap->sumFrameLengthInBuffer -= ap->buffer[0].lengthMsdu;
-			ap->byteSuccFrame += ap->buffer[0].lengthMsdu;
+			//ap->sumFrameLengthInBuffer -= ap->buffer[0].lengthMsdu;
+			//ap->byteSuccFrame += ap->buffer[0].lengthMsdu;
 			//txFrameLength = ap->buffer[0].lengthMsdu;
 			apLength = timeFrameLength(ap->buffer[0].lengthMsdu, ap->dataRate);
 			/*if(txFrameLength<ap->buffer[0].lengthMsdu){
 				txFrameLength = ap->buffer[0].lengthMsdu;
 			}*/
-			ap->buffer[0].lengthMsdu = 0;
-			ap->sumDelay += (gElapsedTime - ap->buffer[0].timeStamp);
-			ap->buffer[0].timeStamp = 0;
-			ap->numSuccFrame++;
+			//ap->buffer[0].lengthMsdu = 0;
+			//ap->sumDelay += (gElapsedTime - ap->buffer[0].timeStamp);
+			//ap->buffer[0].timeStamp = 0;
+			//ap->numSuccFrame++;
+			ap->numCollFrame++;
 			ap->numTxFrame++;
 			//ap->numPrimFrame++;
-			swapAp(ap);
+			//swapAp(ap);
 		}
 		for(i=0; i<gSpec.numSta; i++){
 			if(sta[i].fTxOne==true){
@@ -324,20 +326,21 @@ void transmission(staInfo sta[], apInfo *ap){
 		//Both uplink is collided
 		gSpec.coll++;
 		if(fNoDownlink==false){
-			ap->sumFrameLengthInBuffer -= ap->buffer[0].lengthMsdu;
-			ap->byteSuccFrame += ap->buffer[0].lengthMsdu;
+			//ap->sumFrameLengthInBuffer -= ap->buffer[0].lengthMsdu;
+			//ap->byteSuccFrame += ap->buffer[0].lengthMsdu;
 			//txFrameLength = ap->buffer[0].lengthMsdu;
 			apLength = timeFrameLength(ap->buffer[0].lengthMsdu, ap->dataRate);
 			/*if(txFrameLength<ap->buffer[0].lengthMsdu){
 				txFrameLength = ap->buffer[0].lengthMsdu;
 			}*/
-			ap->buffer[0].lengthMsdu = 0;
-			ap->sumDelay += (gElapsedTime - ap->buffer[0].timeStamp);
-			ap->buffer[0].timeStamp = 0;
-			ap->numSuccFrame++;
+			//ap->buffer[0].lengthMsdu = 0;
+			//ap->sumDelay += (gElapsedTime - ap->buffer[0].timeStamp);
+			//ap->buffer[0].timeStamp = 0;
+			//ap->numSuccFrame++;
+			ap->numCollFrame++;
 			ap->numTxFrame++;
 			//ap->numPrimFrame++;
-			swapAp(ap);
+			//swapAp(ap);
 		}
 		for(i=0; i<gSpec.numSta; i++){
 			if(sta[i].fTxOne==true||sta[i].fTxSecond==true){
