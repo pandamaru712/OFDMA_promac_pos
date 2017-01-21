@@ -34,6 +34,11 @@ FILE *gFileSta;
 FILE *gFileTopology;
 nodeComb *gComb;
 int gNumComb;
+double gSpaceAll;
+double gSpaceUse;
+double gEffOver;
+double gEffEach;
+long gNumSuccTXOP;
 
 Engine *gEp;
 double *r;//{-1, -4, -45, -51, -29, -42, -16, -1, -25, -39, -24, -35, -3, -23, -1, -56, -78, -10, -11, -34, -22, -1, -7, -67, -45, -23, -65, -55, -1, -76, -12, -6, -95, -67, -52, -1};
@@ -136,6 +141,11 @@ int main(int argc, char *argv[]){
 		gNumOFDMA = 0;
 		gNumOFDMAandFullDuplex = 0;
 		gTimeSimulation = 0;
+		gSpaceAll = 0;
+		gSpaceUse = 0;
+		gEffOver = 0;
+		gEffEach = 0;
+		gNumSuccTXOP = 0;
 		//initializeMatrix();
 		printf("Initialization NodeInfo and Matrix.\n");
 		if(gSpec.proMode!=6 && gSpec.proMode!=7){
@@ -221,7 +231,7 @@ void showProgression(int *previousCount){
 }
 
 void makeArray(void){
-	int i, j;
+	int i;//, j;
 
 	r = (double*)malloc(sizeof(double)*gNumComb);
 	A = (double*)malloc(sizeof(double)*NUM_STA*2*gNumComb);

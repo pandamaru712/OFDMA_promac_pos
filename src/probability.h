@@ -8,7 +8,7 @@
 int powint(double, double);
 int makeCombination(staInfo*);
 void outputRate(void);
-int selectNode(apInfo*, staInfo*, bool*, bool*, bool*, bool*, bool*, int*, int*, int*);
+int selectNode(apInfo*, staInfo*, bool*, bool*, bool*, bool*, bool*, int*, int*, int*, protocolDetail*);
 void calculateProbability(staInfo*, apInfo*);
 void initializeMatrix(void);
 void solveLP(void);

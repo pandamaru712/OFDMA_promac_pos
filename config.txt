@@ -1,13 +1,13 @@
 delayMode 1 #How to calculate delay time.
-simTime 10
+simTime 1
 trafficPattern 0
 trial 1
 lambdaSta 0.1
 output default %出力ファイル
 area 100
-delayPower 0
+delayPower 1
 position 1
-optMode 1 #0:promac 1:delay 2:delay to u[i] 3:giveU? 4:giveU and delay? 5:max? 6:rand?
+optMode 0 #0:promac 1:delay 2:delay to u[i] 3:giveU? 4:giveU and delay? 5:max? 6:rand?
 giveU 0.5 %与える値
 dNode 5
 rateMode 1

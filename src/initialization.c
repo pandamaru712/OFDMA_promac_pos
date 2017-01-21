@@ -38,6 +38,8 @@ void initializeResult(resultInfo *result){
 	result->proFullDuplex_J_K = 0;
 	result->proOFDMA = 0;
 	result->proOFDMAandFullduplex = 0;
+	result->effEach = 0;
+	result->effOver = 0;
 }
 
 void initializeNodeInfo(staInfo sta[], apInfo* ap){

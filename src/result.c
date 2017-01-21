@@ -15,6 +15,11 @@ extern int gNumFullDuplex_K;
 extern int gNumFullDuplex_J_K;
 extern int gNumOFDMA;
 extern int gNumOFDMAandFullDuplex;
+extern double gSpaceAll;
+extern double gSpaceUse;
+extern double gEffOver;
+extern double gEffEach;
+extern long gNumSuccTXOP;
 
 void simulationResult(staInfo sta[], apInfo *ap, resultInfo *result, int trialID){
 	int i;
@@ -93,6 +98,10 @@ void simulationResult(staInfo sta[], apInfo *ap, resultInfo *result, int trialID
 	result->proOFDMA += (double)gNumOFDMA / totalTXOP;
 	result->proOFDMAandFullduplex += (double)gNumOFDMAandFullDuplex / totalTXOP;
 
+	result->effEach += gEffEach / (double)gNumSuccTXOP;
+	result->effOver += gSpaceUse / gSpaceAll;
+	printf("%f, %ld, %f, %f\n", gEffEach, gNumSuccTXOP, gSpaceUse, gSpaceAll);
+
 	for(i=0; i<NUM_STA; i++){
 		opp += pow(sta[i].numTxFrame, 2);
 		thr += pow(sta[i].byteSuccFrame * 8 / gElapsedTime, 2);
@@ -138,6 +147,8 @@ void simulationResult(staInfo sta[], apInfo *ap, resultInfo *result, int trialID
 		printf("Full-duplex J K: %f\n", result->proFullDuplex_J_K/gSpec.numTrial);
 		printf("OFDMA: %f\n", result->proOFDMA/gSpec.numTrial);
 		printf("OFDMA and Full-duplex: %f\n", result->proOFDMAandFullduplex/gSpec.numTrial);
+		printf("Effect through all time: %f\n", result->effOver/gSpec.numTrial);
+		printf("Effect in each TXOP: %f\n", result->effEach/gSpec.numTrial);
 		printf("**********\n");
 		if(gSpec.fOutput==true){
 			fprintf(gSpec.output, "\n***** Result *****\n");
@@ -161,6 +172,8 @@ void simulationResult(staInfo sta[], apInfo *ap, resultInfo *result, int trialID
 			fprintf(gSpec.output, "Full-duplex J K: %f\n", result->proFullDuplex_J_K/gSpec.numTrial);
 			fprintf(gSpec.output, "OFDMA: %f\n", result->proOFDMA/gSpec.numTrial);
 			fprintf(gSpec.output, "OFDMA and Full-duplex: %f\n", result->proOFDMAandFullduplex/gSpec.numTrial);
+			fprintf(gSpec.output, "Effect through all time: %f\n", result->effOver/gSpec.numTrial);
+			fprintf(gSpec.output, "Effect in each TXOP: %f\n", result->effEach/gSpec.numTrial);
 			fprintf(gSpec.output, "**********\n\n\n");
 		}
 	}

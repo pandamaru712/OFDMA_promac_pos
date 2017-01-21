@@ -795,7 +795,7 @@ void calculatePhyRate(apInfo *ap, staInfo sta[], int *upNodeOne, int *upNodeSeco
 			sinr_j = mw2dbm(dbm2mw(rssi_j)/(dbm2mw(gSpec.noise)+dbm2mw(ap->txPower-gSpec.SIC)));
 			sinr_k = mw2dbm(dbm2mw(rssi_k)/(dbm2mw(gSpec.noise)+dbm2mw(ap->txPower-gSpec.SIC)));
 			sta[*upNodeOne-1].dataRate = sellectPhyRate(sinr_j) / NUM_MULTIPLEX;
-			sta[*upNodeSecond].dataRate = sellectPhyRate(sinr_k) / NUM_MULTIPLEX;
+			sta[*upNodeSecond-1].dataRate = sellectPhyRate(sinr_k) / NUM_MULTIPLEX;
 		}else if(sinr_j>=snr && sinr_k<snr){
 			rssi_j = sta[*upNodeOne-1].txPower + sta[*upNodeOne-1].antennaGain + ap->antennaGain - (30*log10(distance[0][*upNodeOne]) + gSpec.loss);
 			sinr_j = mw2dbm(dbm2mw(rssi_j)/(dbm2mw(gSpec.noise)+dbm2mw(ap->txPower-gSpec.SIC)));
@@ -843,18 +843,24 @@ void calculatePhyRate(apInfo *ap, staInfo sta[], int *upNodeOne, int *upNodeSeco
 			}
 			rssi_k = txPower + sta[*upNodeSecond-1].antennaGain + ap->antennaGain - 30*log10(distance[0][*upNodeSecond]) - gSpec.loss;
 			sinr_k = mw2dbm(dbm2mw(rssi_k)/(dbm2mw(gSpec.noise)+dbm2mw(ap->txPower-gSpec.SIC)));
-			sta[*upNodeSecond].dataRate = sellectPhyRate(sinr_k) / NUM_MULTIPLEX;
+			sta[*upNodeSecond-1].dataRate = sellectPhyRate(sinr_k) / NUM_MULTIPLEX;
 			ap->dataRate = sellectPhyRate(snr);
 		}
 	}
 	if(*downNode!=0){
-		//printf("AP's data rate: %f\n", ap->dataRate);
+		printf("AP's data rate: %f\n", ap->dataRate);
+	}else{
+		printf("No AP's transmission\n");
 	}
 	if(*upNodeOne!=0){
-		//printf("sta %d's data rate: %f\n", *upNodeOne-1, sta[*upNodeOne-1].dataRate);
+		printf("sta %d's data rate: %f\n", *upNodeOne-1, sta[*upNodeOne-1].dataRate);
+	}else{
+		printf("No UpOne's transmission\n");
 	}
 	if(*upNodeSecond!=0){
-		//printf("sta %d's data rate: %f\n", *upNodeSecond-1, sta[*upNodeSecond-1].dataRate);
+		printf("sta %d's data rate: %f\n", *upNodeSecond-1, sta[*upNodeSecond-1].dataRate);
+	}else{
+		printf("No upSec's transmission\n");
 	}
 
 }

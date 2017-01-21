@@ -30,6 +30,8 @@ typedef struct resultInformation{
 	double proFullDuplex_J_K;
 	double proOFDMA;
 	double proOFDMAandFullduplex;
+	double effEach;
+	double effOver;
 }resultInfo;
 
 #endif

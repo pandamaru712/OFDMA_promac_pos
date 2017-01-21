@@ -16,6 +16,16 @@ typedef enum transmissionProtocol{
 	ofdmaFull
 }protocol;
 
+typedef enum txProtocolDetail{
+	halfAp,
+	halfSta1,
+	halfSta2,
+	fullApSta1,
+	fullApSta2,
+	ofdmad,
+	ofdmaFulld
+}protocolDetail;
+
 typedef struct standard{
 	char *std;
 	int dataRate;

@@ -531,7 +531,7 @@ void calculateProbability(staInfo sta[], apInfo *ap){
 	}
 }*/
 
-int selectNode(apInfo *ap, staInfo sta[], bool *fUpCollOne, bool *fUpCollSecond, bool *fNoUpOne, bool *fNoUpSecond, bool *fNoDownlink, int *upNodeOne, int *upNodeSecond, int *downNode){
+int selectNode(apInfo *ap, staInfo sta[], bool *fUpCollOne, bool *fUpCollSecond, bool *fNoUpOne, bool *fNoUpSecond, bool *fNoDownlink, int *upNodeOne, int *upNodeSecond, int *downNode, protocolDetail *fProtocol){
 	double *proDown;
 	proDown = (double*)malloc(sizeof(double)*(NUM_STA+1));// = {};
 	double *proUp;
@@ -850,27 +850,36 @@ int selectNode(apInfo *ap, staInfo sta[], bool *fUpCollOne, bool *fUpCollSecond,
 		ratePrintf("\n(%d, %d, %d),\n", *downNode, *upNodeOne, *upNodeSecond);
 	}*/
 
-	if(*downNode!=0&&*upNodeOne==0&&*upNodeSecond==0){
+	if((*downNode!=0&&*upNodeOne==0)&&*upNodeSecond==0){
 		gNumHalfDuplex++;
-	}else if(*downNode==0&&*upNodeOne!=0&&*upNodeSecond==0){
+		*fProtocol = halfAp;
+	}else if((*downNode==0&&*upNodeOne!=0)&&*upNodeSecond==0){
 		gNumHalfDuplex++;
-	}else if(*downNode==0&&*upNodeOne==0&&*upNodeSecond!=0){
+		*fProtocol = halfSta1;
+	}else if((*downNode==0&&*upNodeOne==0)&&*upNodeSecond!=0){
 		gNumHalfDuplex++;
-	}else if(*downNode!=0&&*upNodeOne!=0&&*upNodeSecond==0){
+		*fProtocol = halfSta2;
+	}else if((*downNode!=0&&*upNodeOne!=0)&&*upNodeSecond==0){
 		gNumFullDuplex_J++;
-	}else if(*downNode!=0&&*upNodeOne==0&&*upNodeSecond!=0){
+		*fProtocol = fullApSta1;
+	}else if((*downNode!=0&&*upNodeOne==0)&&*upNodeSecond!=0){
 		gNumFullDuplex_K++;
-	}else if(*downNode==0&&*upNodeOne!=0&&*upNodeSecond!=0){
+		*fProtocol = fullApSta2;
+	}else if((*downNode==0&&*upNodeOne!=0)&&*upNodeSecond!=0){
 		if(*upNodeOne==*upNodeSecond){
 			gNumHalfDuplex++;
+			*fProtocol = halfSta1;
 		}else{
 			gNumOFDMA++;
+			*fProtocol = ofdmad;
 		}
-	}else if(*downNode!=0&&*upNodeOne!=0&&*upNodeSecond!=0){
+	}else if((*downNode!=0&&*upNodeOne!=0)&&*upNodeSecond!=0){
 		if(*upNodeOne==*upNodeSecond){
 			gNumFullDuplex_J_K++;
+			*fProtocol = fullApSta1;
 		}else{
 			gNumOFDMAandFullDuplex++;
+			*fProtocol = ofdmaFulld;
 		}
 	}else{
 		printf("Selection error\n");
